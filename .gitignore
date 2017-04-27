@@ -3,3 +3,9 @@
 ################################################################################
 
 /JAM.WebScraper.Android/bin/Debug
+/JAM.WebScraper.Android/obj
+/JAM.WebScraper.Android/obj
+/JAM.WebScraper.dto/bin/Debug
+/JAM.WebScraper.dto/obj/Debug
+/JAM.WebScraper.Test/bin/Debug
+/JAM.WebScraper.Test/obj/Debug
