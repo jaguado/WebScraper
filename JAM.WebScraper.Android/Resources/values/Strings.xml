@@ -2,4 +2,6 @@
 <resources>
     <string name="Hello">Search</string>
     <string name="ApplicationName">JAMTech.cl AIO</string>
+    <string name="torrentButtonLabel">Torrent Search</string>
+  <string name="downloadablesButtonLabel">Download files</string>
 </resources>

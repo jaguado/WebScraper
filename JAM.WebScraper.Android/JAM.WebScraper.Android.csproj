@@ -52,9 +52,6 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JAM.WebScraper.dto">
-      <HintPath>..\JAM.WebScraper.dto\bin\Debug\JAM.WebScraper.dto.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -68,19 +65,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomListAdapterDownloadables.cs" />
     <Compile Include="CustomListAdapterTorrents.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\Http.cs" />
+    <Compile Include="Helpers\UI.cs" />
+    <Compile Include="DownloadablesActivity.cs" />
+    <Compile Include="TorrentActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\ListItemRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Torrent.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Downloadables.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ListItemRowDownloadables.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -97,6 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JAM.WebScraper.dto\JAM.WebScraper.dto.csproj">
+      <Project>{dab3323b-6235-4aa5-8864-ef8f2f4d5d5d}</Project>
+      <Name>JAM.WebScraper.dto</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

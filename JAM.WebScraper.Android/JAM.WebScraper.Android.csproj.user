@@ -3,6 +3,7 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
     <SelectedDevice>Motorola XT1097</SelectedDevice>
-    <DefaultDevice>Nexus</DefaultDevice>
+    <DefaultDevice>Nexus 4 %28Jelly Bean%29</DefaultDevice>
+    <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
   </PropertyGroup>
 </Project>

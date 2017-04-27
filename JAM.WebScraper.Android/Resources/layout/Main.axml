@@ -3,25 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/textSearch"
-        android:text=""
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-  <TextView
-       android:id="@+id/textStatus"
-       android:text=""
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"/>
     <Button
-        android:id="@+id/MyButton"
+        android:id="@+id/buttonTorrent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Hello" />
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
+        android:text="@string/torrentButtonLabel" />
+  <Button
+        android:id="@+id/buttonDownloadables"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ListView" />
+        android:layout_height="wrap_content"
+        android:text="@string/downloadablesButtonLabel" />
 </LinearLayout>
