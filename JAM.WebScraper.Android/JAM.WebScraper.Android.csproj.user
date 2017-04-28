@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
-    <SelectedDevice>Motorola XT1097</SelectedDevice>
+    <SelectedDevice>Nexus 4 %28Jelly Bean%29</SelectedDevice>
     <DefaultDevice>Nexus 4 %28Jelly Bean%29</DefaultDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
   </PropertyGroup>
