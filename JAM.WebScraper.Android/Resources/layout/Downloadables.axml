@@ -3,12 +3,22 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+  <TextView
+        android:id="@+id/textLabelUrl"
+        android:text="@+string/inputTextLabelUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/textSearchDownload"
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-  <EditText
+  <TextView
+      android:id="@+id/textLabelExt"
+      android:text="@+string/inputTextLabelExt"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+    <EditText
         android:id="@+id/textExtensionDownload"
         android:text=""
         android:layout_width="match_parent"
@@ -23,15 +33,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Search" />
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ListViewDownload" />
     <Button
         android:id="@+id/buttonDownload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Download" />
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ListViewDownload" />
 </LinearLayout>

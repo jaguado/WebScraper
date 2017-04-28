@@ -16,7 +16,7 @@ namespace JAM.WebScraper.Android
     {
         Activity context;
         List<dto.DownloadResult> list;
-
+        
         public CustomListAdapterDownloadables(Activity _context, List<dto.DownloadResult> _list)
             : base()
         {
@@ -46,10 +46,10 @@ namespace JAM.WebScraper.Android
             // re-use an existing view, if one is available
             // otherwise create a new one
             if (view == null)
-                view = context.LayoutInflater.Inflate(Resource.Layout.ListItemRow, parent, false);
+                view = context.LayoutInflater.Inflate(Resource.Layout.ListItemRowDownloadables, parent, false);
 
             var item = this[position];
-            view.FindViewById<TextView>(Resource.Id.Title).Text = item.Name;          
+            view.FindViewById<CheckBox>(Resource.Id.Title).Text = item.Name;          
             return view;
         }
     }

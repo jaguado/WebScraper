@@ -68,6 +68,7 @@ namespace JAM.WebScraper.Android
                             {
                                 listViewTorrent.Adapter = new CustomListAdapterTorrents(this, results);
                                 dialog.Dismiss();
+                                Helpers.UI.HideKeyboard(this);
                             });
                         });
                 }

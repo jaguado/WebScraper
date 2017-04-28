@@ -26,11 +26,13 @@ namespace JAM.WebScraper.Android
           
             //Torrent init
             var buttonSearchDownloadables = FindViewById<Button>(Resource.Id.buttonSearchDownloadables);
+            var buttonDownloadDownloadables = FindViewById<Button>(Resource.Id.buttonDownload);  
             var textUrlDownloadables = FindViewById<EditText>(Resource.Id.textSearchDownload);
             var textExtensionDownloadables = FindViewById<EditText>(Resource.Id.textExtensionDownload);
             var statusDownloadables = FindViewById<TextView>(Resource.Id.textStatusDownload);
             var listViewDownloadables = FindViewById<ListView>(Resource.Id.ListViewDownload);
 
+            buttonDownloadDownloadables.Enabled = false;
             listViewDownloadables.ItemClick += OnDownloadablesListItemClick;
             buttonSearchDownloadables.Click += delegate {
                 try
@@ -50,7 +52,7 @@ namespace JAM.WebScraper.Android
                         {
                             RunOnUiThread(() =>
                             {
-                               statusDownloadables.Text = string.Format("{0} torrent found by JAMTech.cl!!", files.Result.Count);
+                               statusDownloadables.Text = string.Format("{0} files found by JAMTech.cl!!", files.Result.Count);
                             });
                             //Initializing listview
                             if (listViewDownloadables != null)
@@ -69,6 +71,9 @@ namespace JAM.WebScraper.Android
                             {
                                 listViewDownloadables.Adapter = new CustomListAdapterDownloadables(this, results);
                                 dialog.Dismiss();
+                                Helpers.UI.HideKeyboard(this);
+                                if (results.Any())
+                                    buttonDownloadDownloadables.Enabled = true;
                             });
                         });
                 }
@@ -77,11 +82,16 @@ namespace JAM.WebScraper.Android
                    Helpers.UI.ShowToast(this, "Error: " + e.ToString(), ToastLength.Long);
                 }
             };
+
+            buttonDownloadDownloadables.Click += delegate
+            {
+
+            };
         }
 
         static async Task<JsonValue> SearchDownloadables(string url, string extension)
         {
-            return await Helpers.Http.GetResponse(string.Format(downloadablesApiUrl, url + extension));
+            return await Helpers.Http.GetResponse(string.Format(downloadablesApiUrl, url, extension));
         }
 
         void OnDownloadablesListItemClick(object sender, AdapterView.ItemClickEventArgs e)
