@@ -16,10 +16,10 @@
         android:text="@string/downloadablesButtonLabel"
         android:layout_below="@+id/buttonTorrent" />
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+        android:id="@+id/adViewMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
+        ads:adUnitId="ca-app-pub-5755979550511763/4076645936"
         android:layout_alignParentBottom="true" />
 </RelativeLayout>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-  <TextView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <TextView
         android:id="@+id/textLabelUrl"
         android:text="@+string/inputTextLabelUrl"
         android:layout_width="match_parent"
@@ -12,36 +13,51 @@
         android:id="@+id/textSearchDownload"
         android:text=""
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-  <TextView
-      android:id="@+id/textLabelExt"
-      android:text="@+string/inputTextLabelExt"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLabelUrl"/>
+    <TextView
+        android:id="@+id/textLabelExt"
+        android:text="@+string/inputTextLabelExt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSearchDownload"/>
     <EditText
         android:id="@+id/textExtensionDownload"
         android:text=""
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLabelExt"/>
     <TextView
         android:id="@+id/textStatusDownload"
         android:text=""
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textExtensionDownload"/>
     <Button
         android:id="@+id/buttonSearchDownloadables"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search" />
+        android:text="Search"
+        android:layout_below="@+id/textStatusDownload"/>
     <Button
         android:id="@+id/buttonDownload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Download" />
+        android:text="Download"
+        android:layout_below="@+id/buttonSearchDownloadables"/>
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ListViewDownload" />
-</LinearLayout>
+        android:id="@+id/ListViewDownload"
+        android:layout_below="@+id/buttonDownload"/>
+<com.google.android.gms.ads.AdView
+        android:id="@+id/adViewDownloadables"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-5755979550511763/7756639133"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ListViewDownload"/>
+</RelativeLayout>

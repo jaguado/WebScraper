@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Json;
 using System.Linq;
+using Android.Gms.Ads;
 
 namespace JAM.WebScraper.Android
 {
@@ -87,6 +88,9 @@ namespace JAM.WebScraper.Android
             {
 
             };
+
+            //Ads
+            Helpers.Ads.InitAds(FindViewById<AdView>(Resource.Id.adViewDownloadables));
         }
 
         static async Task<JsonValue> SearchDownloadables(string url, string extension)

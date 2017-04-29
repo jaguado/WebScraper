@@ -112,13 +112,25 @@ namespace JAM.WebScraper.Android
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int common_full_open_on_phone = 2130837504;
+			public const int Comment = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int common_ic_googleplayservices = 2130837505;
+			public const int common_full_open_on_phone = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Icon = 2130837506;
+			public const int common_ic_googleplayservices = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int Down = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int Icon = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int Up = 2130837509;
+			
+			// aapt resource value: 0x7f020006
+			public const int Vip = 2130837510;
 			
 			static Drawable()
 			{
@@ -133,29 +145,35 @@ namespace JAM.WebScraper.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f08000d
-			public const int Description = 2131230733;
+			// aapt resource value: 0x7f08000e
+			public const int Description = 2131230734;
 			
-			// aapt resource value: 0x7f08000f
-			public const int Leeds = 2131230735;
+			// aapt resource value: 0x7f080010
+			public const int Leeds = 2131230736;
 			
 			// aapt resource value: 0x7f08000a
 			public const int ListViewDownload = 2131230730;
 			
-			// aapt resource value: 0x7f080017
-			public const int ListViewTorrent = 2131230743;
+			// aapt resource value: 0x7f080018
+			public const int ListViewTorrent = 2131230744;
 			
-			// aapt resource value: 0x7f08000e
-			public const int Seeds = 2131230734;
+			// aapt resource value: 0x7f08000f
+			public const int Seeds = 2131230735;
+			
+			// aapt resource value: 0x7f08000d
+			public const int Title = 2131230733;
 			
 			// aapt resource value: 0x7f08000c
-			public const int Title = 2131230732;
+			public const int Type = 2131230732;
 			
 			// aapt resource value: 0x7f08000b
-			public const int Type = 2131230731;
+			public const int adViewDownloadables = 2131230731;
 			
-			// aapt resource value: 0x7f080012
-			public const int adView = 2131230738;
+			// aapt resource value: 0x7f080013
+			public const int adViewMain = 2131230739;
+			
+			// aapt resource value: 0x7f080019
+			public const int adViewTorrent = 2131230745;
 			
 			// aapt resource value: 0x7f080000
 			public const int adjust_height = 2131230720;
@@ -166,17 +184,17 @@ namespace JAM.WebScraper.Android
 			// aapt resource value: 0x7f080009
 			public const int buttonDownload = 2131230729;
 			
-			// aapt resource value: 0x7f080011
-			public const int buttonDownloadables = 2131230737;
+			// aapt resource value: 0x7f080012
+			public const int buttonDownloadables = 2131230738;
 			
 			// aapt resource value: 0x7f080008
 			public const int buttonSearchDownloadables = 2131230728;
 			
-			// aapt resource value: 0x7f080016
-			public const int buttonSearchTorrent = 2131230742;
+			// aapt resource value: 0x7f080017
+			public const int buttonSearchTorrent = 2131230743;
 			
-			// aapt resource value: 0x7f080010
-			public const int buttonTorrent = 2131230736;
+			// aapt resource value: 0x7f080011
+			public const int buttonTorrent = 2131230737;
 			
 			// aapt resource value: 0x7f080002
 			public const int none = 2131230722;
@@ -184,8 +202,8 @@ namespace JAM.WebScraper.Android
 			// aapt resource value: 0x7f080006
 			public const int textExtensionDownload = 2131230726;
 			
-			// aapt resource value: 0x7f080013
-			public const int textLabel = 2131230739;
+			// aapt resource value: 0x7f080014
+			public const int textLabel = 2131230740;
 			
 			// aapt resource value: 0x7f080005
 			public const int textLabelExt = 2131230725;
@@ -196,14 +214,14 @@ namespace JAM.WebScraper.Android
 			// aapt resource value: 0x7f080004
 			public const int textSearchDownload = 2131230724;
 			
-			// aapt resource value: 0x7f080014
-			public const int textSearchTorrent = 2131230740;
+			// aapt resource value: 0x7f080015
+			public const int textSearchTorrent = 2131230741;
 			
 			// aapt resource value: 0x7f080007
 			public const int textStatusDownload = 2131230727;
 			
-			// aapt resource value: 0x7f080015
-			public const int textStatusTorrent = 2131230741;
+			// aapt resource value: 0x7f080016
+			public const int textStatusTorrent = 2131230742;
 			
 			static Id()
 			{
@@ -276,9 +294,6 @@ namespace JAM.WebScraper.Android
 			
 			// aapt resource value: 0x7f040000
 			public const int auth_google_play_services_client_google_display_name = 2130968576;
-			
-			// aapt resource value: 0x7f04002d
-			public const int banner_ad_unit_id = 2130968621;
 			
 			// aapt resource value: 0x7f040004
 			public const int common_android_wear_notification_needs_update_text = 2130968580;

@@ -52,26 +52,11 @@ namespace JAM.WebScraper.Android
             view.FindViewById<TextView>(Resource.Id.Type).Text = item.SubType;
             view.FindViewById<TextView>(Resource.Id.Title).Text = item.Name;
             var description = string.Empty;
-            if (item.Description != null)
-            {
-                foreach(var desc in item.Description.Where(x=>x!=string.Empty))
-                {
-                    description += desc + System.Environment.NewLine;
-                }
-            }
+            if (item.Description != null && item.Description.Any())
+                description = item.Description.First();
             view.FindViewById<TextView>(Resource.Id.Description).Text = description;
-
-            //var links = string.Empty;
-            //if (item.Links != null)
-            //{
-            //    foreach (var link in item.Links.Where(x=> x.Item2.StartsWith("magnet"))) {
-            //        links += link.Item1 + System.Environment.NewLine;
-            //    }
-            //}
-            //view.FindViewById<TextView>(Resource.Id.Links).Text = links;
-
-            view.FindViewById<TextView>(Resource.Id.Seeds).Text = item.Seeds.ToString();
-            view.FindViewById<TextView>(Resource.Id.Leeds).Text = item.Leeds.ToString();
+            view.FindViewById<TextView>(Resource.Id.Seeds).Text = "S: " + item.Seeds.ToString() + " / ";
+            view.FindViewById<TextView>(Resource.Id.Leeds).Text = "L: " + item.Leeds.ToString();
 
             //using (var imageView = view.FindViewById<ImageView>(Resource.Id.Thumbnail))
             //{

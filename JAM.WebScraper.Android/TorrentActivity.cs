@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Json;
 using System.Linq;
+using Android.Gms.Ads;
 
 namespace JAM.WebScraper.Android
 {
@@ -77,6 +78,9 @@ namespace JAM.WebScraper.Android
                    Helpers.UI.ShowToast(this, "Error: " + e.ToString(), ToastLength.Long);
                 }
             };
+
+            //Ads
+            Helpers.Ads.InitAds(FindViewById<AdView>(Resource.Id.adViewTorrent));
         }
 
         static async Task<JsonValue> SearchTorrents(string textToSearch)

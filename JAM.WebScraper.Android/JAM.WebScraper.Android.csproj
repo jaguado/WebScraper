@@ -81,6 +81,7 @@
     <Compile Include="CustomListAdapterTorrents.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\Ads.cs" />
     <Compile Include="Helpers\Http.cs" />
     <Compile Include="Helpers\UI.cs" />
     <Compile Include="DownloadablesActivity.cs" />
@@ -93,6 +94,10 @@
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\drawable\Comment.gif" />
+    <AndroidResource Include="Resources\drawable\Down.png" />
+    <AndroidResource Include="Resources\drawable\Up.png" />
+    <AndroidResource Include="Resources\drawable\Vip.gif" />
     <AndroidResource Include="Resources\layout\ListItemRow.axml">
       <SubType>Designer</SubType>
     </AndroidResource>

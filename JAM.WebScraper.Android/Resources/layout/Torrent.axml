@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,21 +13,33 @@
         android:id="@+id/textSearchTorrent"
         android:text=""
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLabel"/>
     <TextView
         android:id="@+id/textStatusTorrent"
         android:text=""
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSearchTorrent"/>
     <Button
         android:id="@+id/buttonSearchTorrent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Hello" />
+        android:text="@string/Hello"
+        android:layout_below="@+id/textStatusTorrent"/>
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ListViewTorrent" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/ListViewTorrent"
+        android:layout_below="@+id/buttonSearchTorrent"/>
+  <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewTorrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-5755979550511763/9233372330"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ListViewTorrent"/>
+</RelativeLayout>
