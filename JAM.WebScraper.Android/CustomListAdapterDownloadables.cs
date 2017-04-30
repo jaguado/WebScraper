@@ -15,18 +15,18 @@ namespace JAM.WebScraper.Android
     public class CustomListAdapterDownloadables : BaseAdapter<dto.DownloadResult>
     {
         Activity context;
-        List<dto.DownloadResult> list;
+        public List<dto.DownloadResult> List { set; get; }
         
         public CustomListAdapterDownloadables(Activity _context, List<dto.DownloadResult> _list)
             : base()
         {
             this.context = _context;
-            this.list = _list;
+            this.List = _list;
         }
 
         public override int Count
         {
-            get { return list.Count; }
+            get { return List.Count; }
         }
 
         public override long GetItemId(int position)
@@ -36,7 +36,7 @@ namespace JAM.WebScraper.Android
 
         public override dto.DownloadResult this[int index]
         {
-            get { return list[index]; }
+            get { return List[index]; }
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
@@ -49,8 +49,38 @@ namespace JAM.WebScraper.Android
                 view = context.LayoutInflater.Inflate(Resource.Layout.ListItemRowDownloadables, parent, false);
 
             var item = this[position];
-            view.FindViewById<CheckBox>(Resource.Id.Title).Text = item.Name;          
+            var checkBox = view.FindViewById<CheckBox>(Resource.Id.Title);
+            checkBox.Tag = position;
+            checkBox.Text = item.Name;           
+            checkBox.SetOnCheckedChangeListener(new CheckedChangeListener(context, List));
+            checkBox.Checked = item.Selected;
+
             return view;
+        }
+
+        private void CheckBox_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
+            var pos = (int)(((CheckBox)sender).GetTag(Resource.Id.Title));
+            if (this.Count > pos)
+                this[pos].Selected = e.IsChecked;
+        }
+
+        private class CheckedChangeListener : Java.Lang.Object, CompoundButton.IOnCheckedChangeListener
+        {
+            private Activity activity;
+            private List<dto.DownloadResult> _list;
+            public CheckedChangeListener(Activity activity, List<dto.DownloadResult> list)
+            {
+                this.activity = activity;
+                _list = list;
+            }
+
+            public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
+            {
+                var pos = (int)buttonView.Tag;
+                if (_list.Count > pos)
+                    _list[pos].Selected = isChecked;
+            }
         }
     }
 }

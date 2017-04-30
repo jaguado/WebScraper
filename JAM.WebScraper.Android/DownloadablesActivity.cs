@@ -34,7 +34,7 @@ namespace JAM.WebScraper.Android
             var listViewDownloadables = FindViewById<ListView>(Resource.Id.ListViewDownload);
 
             buttonDownloadDownloadables.Enabled = false;
-            listViewDownloadables.ItemClick += OnDownloadablesListItemClick;
+            //listViewDownloadables.ItemClick += OnDownloadablesListItemClick;
             buttonSearchDownloadables.Click += delegate {
                 try
                 {
@@ -86,7 +86,16 @@ namespace JAM.WebScraper.Android
 
             buttonDownloadDownloadables.Click += delegate
             {
-
+                var adpTemp = (CustomListAdapterDownloadables) listViewDownloadables.Adapter;
+                for(int i=0; i < adpTemp.Count; i++)
+                {
+                    var item = adpTemp.List[i];
+                    if (item.Selected)
+                    {
+                        var intent = new Intent(Intent.ActionView, android.Net.Uri.Parse(item.Url));
+                        StartActivity(intent);
+                    }
+                }
             };
 
             //Ads

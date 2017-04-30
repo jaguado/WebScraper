@@ -9,7 +9,11 @@ namespace JAM.WebScraper.Android.Helpers
     {
         public static void ShowToast(Activity context, string text, ToastLength length)
         {
-            Toast.MakeText(context, text, length);
+            context.RunOnUiThread(() =>
+            {
+                Toast.MakeText(context, text, length);
+            });
+            
         }
         public static void HideKeyboard(Activity context)
         {
