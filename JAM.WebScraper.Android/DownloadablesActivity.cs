@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Json;
 using System.Linq;
 using Android.Gms.Ads;
+using System.IO;
+using System.Web;
 
 namespace JAM.WebScraper.Android
 {
@@ -32,9 +34,18 @@ namespace JAM.WebScraper.Android
             var textExtensionDownloadables = FindViewById<EditText>(Resource.Id.textExtensionDownload);
             var statusDownloadables = FindViewById<TextView>(Resource.Id.textStatusDownload);
             var listViewDownloadables = FindViewById<ListView>(Resource.Id.ListViewDownload);
+            var checkBoxAll = FindViewById<CheckBox>(Resource.Id.checkBoxAll);
 
-            buttonDownloadDownloadables.Enabled = false;
-            //listViewDownloadables.ItemClick += OnDownloadablesListItemClick;
+            checkBoxAll.Enabled = buttonDownloadDownloadables.Enabled = false;
+            listViewDownloadables.ItemLongClick += delegate(object sender, AdapterView.ItemLongClickEventArgs e)
+            {
+                if (results != null && e.Position >= 0 && results.Count > e.Position)
+                {
+                    var selected = results[e.Position];
+                    Helpers.UI.ShowToast(this, "Start downloading " + selected.Name, ToastLength.Long);
+                    Download(this, selected, e.Position);
+                }
+            };
             buttonSearchDownloadables.Click += delegate {
                 try
                 {
@@ -73,8 +84,7 @@ namespace JAM.WebScraper.Android
                                 listViewDownloadables.Adapter = new CustomListAdapterDownloadables(this, results);
                                 dialog.Dismiss();
                                 Helpers.UI.HideKeyboard(this);
-                                if (results.Any())
-                                    buttonDownloadDownloadables.Enabled = true;
+                                checkBoxAll.Enabled = buttonDownloadDownloadables.Enabled = results.Any();
                             });
                         });
                 }
@@ -92,14 +102,81 @@ namespace JAM.WebScraper.Android
                     var item = adpTemp.List[i];
                     if (item.Selected)
                     {
-                        var intent = new Intent(Intent.ActionView, android.Net.Uri.Parse(item.Url));
-                        StartActivity(intent);
+                        //Async download with progressBar
+                        Download(this, item, i);
+                        //var intent = new Intent(Intent.ActionView, android.Net.Uri.Parse(item.Url));
+                        //StartActivity(intent);
                     }
                 }
             };
 
+            checkBoxAll.CheckedChange += delegate(object sender, CompoundButton.CheckedChangeEventArgs e)
+            {
+                var adapter = (CustomListAdapterDownloadables)listViewDownloadables.Adapter;
+                if (adapter != null && adapter.List != null && adapter.List.Any())
+                {
+                    adapter.List.ForEach(x => x.Selected = e.IsChecked);
+                    adapter.NotifyDataSetChanged();
+                }
+            };
+            
+
             //Ads
             Helpers.Ads.InitAds(FindViewById<AdView>(Resource.Id.adViewDownloadables));
+        }
+
+        private static DateTime lastProgressBarUpdateTime = DateTime.MinValue;
+        static async void Download(Activity context, dto.DownloadResult item, int position)
+        {
+            using(var webClient = new System.Net.WebClient())
+            {
+                var view = context.FindViewById<ListView>(Resource.Id.ListViewDownload);
+                var adapter = (CustomListAdapterDownloadables)view.Adapter;
+                webClient.DownloadProgressChanged += delegate(object sender, System.Net.DownloadProgressChangedEventArgs e)
+                {
+                    item.DownloadProgress = e.ProgressPercentage;
+                    //Update progress bar value on the view
+                    if (lastProgressBarUpdateTime < DateTime.Now.AddSeconds(-5))
+                    {
+                        adapter.NotifyDataSetChanged();
+                        lastProgressBarUpdateTime = DateTime.Now;
+                    }
+                };
+          
+                try
+                {
+                    var bytes = await webClient.DownloadDataTaskAsync(item.Url);
+                    var downloadsPath = android.OS.Environment.ExternalStorageDirectory + "/Download"; // The direction is Download folder in Device store. A file will be save here.
+                    var fileName = Path.GetFileNameWithoutExtension(System.Web.HttpUtility.UrlDecode(item.BaseUrl.Substring(item.BaseUrl.LastIndexOf("/") + 1)));
+                    var localPath = Path.Combine(downloadsPath, fileName);
+
+                    var path = Path.Combine(downloadsPath, fileName);
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
+
+                    //Save using writeAsync
+                    var fs = new FileStream(Path.Combine(path, item.Name), FileMode.OpenOrCreate);
+                    await fs.WriteAsync(bytes, 0, bytes.Length);// writes to Download folder 
+                    fs.Close();
+
+                    //File downloaded
+                    item.DownloadProgress = 100;
+                    item.Selected = false;
+                    adapter.NotifyDataSetChanged();
+                    Console.WriteLine("{0} bytes downloaded of file {1}", bytes.Length, item.Name);
+                }
+                catch (TaskCanceledException te)
+                {
+                    Helpers.UI.ShowToast(context, "Canceled: " + te.ToString(), ToastLength.Long);
+                    return;
+                }
+                catch (Exception a)
+                {
+                    Helpers.UI.ShowToast(context, "ERROR: " + a.ToString(), ToastLength.Long);
+                    return;
+                }
+
+            }
         }
 
         static async Task<JsonValue> SearchDownloadables(string url, string extension)

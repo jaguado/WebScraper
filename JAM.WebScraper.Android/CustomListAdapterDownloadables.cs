@@ -1,12 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
@@ -49,18 +42,25 @@ namespace JAM.WebScraper.Android
                 view = context.LayoutInflater.Inflate(Resource.Layout.ListItemRowDownloadables, parent, false);
 
             var item = this[position];
-            var checkBox = view.FindViewById<CheckBox>(Resource.Id.Title);
+            var checkBox = view.FindViewById<CheckBox>(Resource.Id.checkBox);
             checkBox.Tag = position;
-            checkBox.Text = item.Name;           
+            checkBox.Text = string.Empty;         
             checkBox.SetOnCheckedChangeListener(new CheckedChangeListener(context, List));
             checkBox.Checked = item.Selected;
+
+            var title = view.FindViewById<TextView>(Resource.Id.Title);
+            title.Text = item.Name;
+
+            var progress = view.FindViewById<ProgressBar>(Resource.Id.progressBar);
+            progress.Max = 100;
+            progress.Progress = item.DownloadProgress;
 
             return view;
         }
 
         private void CheckBox_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
-            var pos = (int)(((CheckBox)sender).GetTag(Resource.Id.Title));
+            var pos = (int)(((CheckBox)sender).GetTag(Resource.Id.checkBox));
             if (this.Count > pos)
                 this[pos].Selected = e.IsChecked;
         }

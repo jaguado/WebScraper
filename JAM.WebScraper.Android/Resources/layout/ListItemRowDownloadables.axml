@@ -5,14 +5,25 @@
     android:minHeight="50dp"
     android:orientation="horizontal">
     <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp" />
+    <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/Type"
+        android:layout_toRightOf="@id/checkBox"
         android:lineSpacingExtra="3dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:typeface="sans" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/checkBox"
+        android:layout_below="@+id/Title"
+        android:layout_centerHorizontal="true"
+        style="@android:style/Widget.ProgressBar.Horizontal" />
 </RelativeLayout>

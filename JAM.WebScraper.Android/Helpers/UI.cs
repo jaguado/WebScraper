@@ -11,7 +11,7 @@ namespace JAM.WebScraper.Android.Helpers
         {
             context.RunOnUiThread(() =>
             {
-                Toast.MakeText(context, text, length);
+                Toast.MakeText(context, text, length).Show();
             });
             
         }

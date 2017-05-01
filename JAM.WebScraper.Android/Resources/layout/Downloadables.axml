@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/textLabelUrl"
         android:text="@+string/inputTextLabelUrl"
@@ -14,50 +14,57 @@
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textLabelUrl"/>
+        android:layout_below="@+id/textLabelUrl" />
     <TextView
         android:id="@+id/textLabelExt"
         android:text="@+string/inputTextLabelExt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textSearchDownload"/>
+        android:layout_below="@+id/textSearchDownload" />
     <EditText
         android:id="@+id/textExtensionDownload"
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textLabelExt"/>
+        android:layout_below="@+id/textLabelExt" />
     <TextView
         android:id="@+id/textStatusDownload"
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textExtensionDownload"/>
+        android:layout_below="@+id/textExtensionDownload" />
     <Button
         android:id="@+id/buttonSearchDownloadables"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Search"
-        android:layout_below="@+id/textStatusDownload"/>
+        android:layout_below="@+id/textStatusDownload" />
     <Button
         android:id="@+id/buttonDownload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Download"
-        android:layout_below="@+id/buttonSearchDownloadables"/>
+        android:layout_below="@+id/buttonSearchDownloadables" />
+    <CheckBox
+        android:id="@+id/checkBoxAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp"
+        android:text="Select All"
+        android:layout_below="@+id/buttonDownload"/>
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ListViewDownload"
-        android:layout_below="@+id/buttonDownload"/>
-<com.google.android.gms.ads.AdView
+        android:layout_below="@+id/checkBoxAll" />
+    <com.google.android.gms.ads.AdView
         android:id="@+id/adViewDownloadables"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-5755979550511763/7756639133"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/ListViewDownload"/>
+        android:layout_below="@+id/ListViewDownload" />
 </RelativeLayout>

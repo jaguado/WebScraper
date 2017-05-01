@@ -11,5 +11,7 @@ namespace JAM.WebScraper.dto
         public string Name { set; get; }
         public string Url { set; get; }
         public string BaseUrl { set; get; }
+        public bool Selected { set; get; }
+        public int DownloadProgress { set; get; }
     }
 }
