@@ -15,7 +15,7 @@ namespace JAM.WebScraper.Android
     [Activity(Label = "Torrent Search", ScreenOrientation =android.Content.PM.ScreenOrientation.Portrait, Icon = "@drawable/icon")]
     public class TorrentActivity : Activity
     {
-        const string torrentApiUrl = "http://www.jamtech.cl/api/Torrent?search=";
+        const string torrentApiUrl = "http://api.jamtech.cl/api/Torrent?search=";
         private List<dto.TorrentResult> results = null;
         private ProgressDialog dialog = null;
         protected override void OnCreate(Bundle bundle)

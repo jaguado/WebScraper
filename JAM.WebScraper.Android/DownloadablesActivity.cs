@@ -18,7 +18,7 @@ namespace JAM.WebScraper.Android
     [Activity(Label = "Download files", ScreenOrientation =android.Content.PM.ScreenOrientation.Portrait, Icon = "@drawable/icon")]
     public class DownloadablesActivity : Activity
     {
-        const string downloadablesApiUrl = "http://www.jamtech.cl/api/Downloadables?urls={0}&extension={1}";
+        const string downloadablesApiUrl = "http://api.jamtech.cl/api/Downloadables?urls={0}&extension={1}";
         private List<dto.DownloadResult> results = null;
         private ProgressDialog dialog = null;
         protected override void OnCreate(Bundle bundle)
