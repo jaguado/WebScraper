@@ -11,6 +11,7 @@ using System.Linq;
 using Android.Gms.Ads;
 using System.IO;
 using System.Web;
+using System.Threading;
 
 namespace JAM.WebScraper.Android
 {
@@ -43,7 +44,7 @@ namespace JAM.WebScraper.Android
                 {
                     var selected = results[e.Position];
                     Helpers.UI.ShowToast(this, "Start downloading " + selected.Name, ToastLength.Long);
-                    Download(this, selected, e.Position);
+                    Download(this, selected);
                 }
             };
             buttonSearchDownloadables.Click += delegate {
@@ -94,20 +95,39 @@ namespace JAM.WebScraper.Android
                 }
             };
 
+            
             buttonDownloadDownloadables.Click += delegate
             {
+                RunOnUiThread(() => { buttonDownloadDownloadables.Enabled = false; });
                 var adpTemp = (CustomListAdapterDownloadables) listViewDownloadables.Adapter;
-                for(int i=0; i < adpTemp.Count; i++)
+                //var count = DownloadAll(this, adpTemp.List.Where(x => x.Selected));
+                var count = 0;
+                for (int i = 0; i < adpTemp.Count; i++)
                 {
                     var item = adpTemp.List[i];
                     if (item.Selected)
                     {
                         //Async download with progressBar
-                        Download(this, item, i);
+                        Download(this, item);
+                        count++;
                         //var intent = new Intent(Intent.ActionView, android.Net.Uri.Parse(item.Url));
                         //StartActivity(intent);
                     }
                 }
+                //Wait until all donwload finished
+                Task.Run(() =>
+                {
+                    while (adpTemp.List.Any(x => x.Selected && x.DownloadProgress < 100))
+                        Thread.Sleep(200);
+                    Helpers.UI.ShowAlert(this, "Download Finished", string.Format("{0} files downloaded.", count));
+                }).ContinueWith(x=>
+                {
+                    RunOnUiThread(() => {
+                        buttonDownloadDownloadables.Enabled = true;
+                        checkBoxAll.Checked = false;
+                    });
+                    
+                });
             };
 
             checkBoxAll.CheckedChange += delegate(object sender, CompoundButton.CheckedChangeEventArgs e)
@@ -126,7 +146,8 @@ namespace JAM.WebScraper.Android
         }
 
         private static DateTime lastProgressBarUpdateTime = DateTime.MinValue;
-        static async void Download(Activity context, dto.DownloadResult item, int position)
+        private static string DownloadsPath = android.OS.Environment.ExternalStorageDirectory + "/Download"; // The direction is Download folder in Device store. A file will be save here.
+        async static void Download(Activity context, dto.DownloadResult item)
         {
             using(var webClient = new System.Net.WebClient())
             {
@@ -145,25 +166,29 @@ namespace JAM.WebScraper.Android
           
                 try
                 {
-                    var bytes = await webClient.DownloadDataTaskAsync(item.Url);
-                    var downloadsPath = android.OS.Environment.ExternalStorageDirectory + "/Download"; // The direction is Download folder in Device store. A file will be save here.
-                    var fileName = Path.GetFileNameWithoutExtension(System.Web.HttpUtility.UrlDecode(item.BaseUrl.Substring(item.BaseUrl.LastIndexOf("/") + 1)));
-                    var localPath = Path.Combine(downloadsPath, fileName);
+                    var fileName = Path.GetFileNameWithoutExtension(HttpUtility.UrlDecode(item.BaseUrl.Substring(item.BaseUrl.LastIndexOf("/") + 1)));
+                    var localPath = Path.Combine(DownloadsPath, fileName);
 
-                    var path = Path.Combine(downloadsPath, fileName);
+                    var path = Path.Combine(DownloadsPath, fileName);
                     if (!Directory.Exists(path))
                         Directory.CreateDirectory(path);
 
                     //Save using writeAsync
-                    var fs = new FileStream(Path.Combine(path, item.Name), FileMode.OpenOrCreate);
-                    await fs.WriteAsync(bytes, 0, bytes.Length);// writes to Download folder 
-                    fs.Close();
+                    int bytesCount = 0;
+                    if (!File.Exists(Path.Combine(path, item.Name)))
+                    {
+                        var bytes = await webClient.DownloadDataTaskAsync(item.Url);
+                        var fs = new FileStream(Path.Combine(path, item.Name), FileMode.OpenOrCreate);
+                        await fs.WriteAsync(bytes, 0, bytes.Length);// writes to Download folder 
+                        fs.Close();
+                        bytesCount = bytes.Length;
+                    }
 
                     //File downloaded
                     item.DownloadProgress = 100;
                     item.Selected = false;
                     adapter.NotifyDataSetChanged();
-                    Console.WriteLine("{0} bytes downloaded of file {1}", bytes.Length, item.Name);
+                    Console.WriteLine("{0} bytes downloaded of file {1}", bytesCount, item.Name);
                 }
                 catch (TaskCanceledException te)
                 {
@@ -175,8 +200,22 @@ namespace JAM.WebScraper.Android
                     Helpers.UI.ShowToast(context, "ERROR: " + a.ToString(), ToastLength.Long);
                     return;
                 }
-
             }
+        }
+        static int DownloadAll(Activity context, IEnumerable<dto.DownloadResult> items)
+        {
+            var TaskList = new List<Task>();
+            items.ToList().ForEach(item => 
+            {
+                var task = new Task(() =>
+                {
+                    Download(context, item);
+                });
+                task.Start();
+                TaskList.Add(task);
+            });
+            Task.WhenAll(TaskList.ToArray());
+            return TaskList.Count();
         }
 
         static async Task<JsonValue> SearchDownloadables(string url, string extension)
