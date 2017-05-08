@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textLabelUrl"
+        android:text="@+string/inputTextLabelUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/textSearchDownload"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLabelUrl" />
+    <TextView
+        android:id="@+id/textLabelExt"
+        android:text="@+string/inputTextLabelExt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSearchDownload" />
+    <EditText
+        android:id="@+id/textExtensionDownload"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLabelExt" />
+     <TextView
+        android:id="@+id/textLabelLevels"
+        android:text="@+string/inputTextLabelLevels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textExtensionDownload" />
+    <Spinner  
+     android:id="@+id/ddlDirLevels"  
+     android:layout_width="fill_parent"  
+     android:layout_height="wrap_content"
+     android:layout_below="@+id/textLabelLevels"
+    />  
+    <TextView
+        android:id="@+id/textStatusDownload"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ddlDirLevels" />
+    <Button
+        android:id="@+id/buttonSearchDownloadables"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:layout_below="@+id/textStatusDownload" />
+</RelativeLayout>

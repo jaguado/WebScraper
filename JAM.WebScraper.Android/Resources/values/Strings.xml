@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Hello">Search</string>
+    <string name="ApplicationName">JAMTech.cl AIO</string>
+    <string name="torrentButtonLabel">Torrent Search</string>
+    <string name="downloadablesButtonLabel">Download files</string>
+    <string name="videosButtonLabel">Download videos</string>
+    <string name="inputTextLabel">Enter text to search:</string>
+    <string name="inputTextLabelUrl">Enter Url:</string>
+    <string name="inputTextLabelExt">Enter extension:</string>
+    <string name="inputTextLabelLevels">Subdirectories levels:</string>
+</resources>
