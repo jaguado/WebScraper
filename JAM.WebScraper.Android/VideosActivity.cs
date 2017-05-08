@@ -7,7 +7,6 @@ using Android.OS;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Json;
-using System.Linq;
 using Android.Gms.Ads;
 using JAM.WebScraper.Android.Helpers;
 
@@ -63,21 +62,10 @@ namespace JAM.WebScraper.Android
                         result = null;
                         if (!videosFound.IsFaulted)
                         {
-                            RunOnUiThread(() =>
-                            {
-                                statusVideos.Text = string.Format("{0} videos found by JAMTech.cl!!", videosFound.Result.Count);
-                            });
                             //Initializing listview
                             if (listViewVideos != null)
                             {
-                                try
-                                {
-                                    result = Newtonsoft.Json.JsonConvert.DeserializeObject<dto.VideosResult>(videosFound.Result.ToString());
-                                }
-                                catch(Exception ex)
-                                {
-                                    throw;
-                                }
+                                result = Newtonsoft.Json.JsonConvert.DeserializeObject<dto.VideosResult>(videosFound.Result.ToString());
                                 if (result == null)
                                 {
                                     result = new dto.VideosResult()
@@ -87,6 +75,13 @@ namespace JAM.WebScraper.Android
                                             formats = new List<dto.Format>()
                                         }
                                     };
+                                }
+                                else
+                                {
+                                    RunOnUiThread(() =>
+                                    {
+                                        statusVideos.Text = string.Format("{0} videos found by JAMTech.cl!!", result.info.formats.Count);
+                                    });
                                 }
                             }
                         }
