@@ -9,28 +9,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
-        android:id="@+id/textSearchTorrent"
+        android:id="@+id/textSearchVideos"
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textLabel" />
     <TextView
-        android:id="@+id/textStatusTorrent"
+        android:id="@+id/textStatusVideos"
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textSearchTorrent" />
+        android:layout_below="@+id/textSearchVideos" />
     <Button
-        android:id="@+id/buttonSearchTorrent"
+        android:id="@+id/buttonSearchVideos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Hello"
-        android:layout_below="@+id/textStatusTorrent" />
+        android:layout_below="@+id/textStatusVideos" />
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ListViewTorrent"
-        android:layout_below="@+id/buttonSearchTorrent" />
+        android:id="@+id/ListViewVideos"
+        android:layout_below="@+id/buttonSearchVideos" />
 </RelativeLayout>

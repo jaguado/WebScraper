@@ -9,22 +9,32 @@ using System.Threading.Tasks;
 using System.Json;
 using System.Linq;
 using Android.Gms.Ads;
+using JAM.WebScraper.Android.Helpers;
 
 namespace JAM.WebScraper.Android
 {
     [Activity(Label = "Torrent Search", ScreenOrientation =android.Content.PM.ScreenOrientation.Portrait, Icon = "@drawable/icon")]
     public class TorrentActivity : Activity
     {
-        const string torrentApiUrl = "http://api.jamtech.cl/api/Torrent?search=";
+        const string torrentApiUrl = "https://jamtech.herokuapp.com/api/Torrent?search=";
         private List<dto.TorrentResult> results = null;
         private ProgressDialog dialog = null;
+        private InterstitialAd ad = null;
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Torrent);
-          
+
+            //Ads
+            ad = Ads.ConstructFullPageAdd(this, "ca-app-pub-5755979550511763/1796857138");
+            var intlistener = new Ads.adlistener();
+            intlistener.AdLoaded += () => { if (ad.IsLoaded) ad.Show(); };
+            ad.AdListener = intlistener;
+            ad.CustomBuild();
+            
+
             //Torrent init
             var buttonTorrent = FindViewById<Button>(Resource.Id.buttonSearchTorrent);
             var textTorrent = FindViewById<EditText>(Resource.Id.textSearchTorrent);
@@ -79,8 +89,7 @@ namespace JAM.WebScraper.Android
                 }
             };
 
-            //Ads
-            Helpers.Ads.InitAds(FindViewById<AdView>(Resource.Id.adViewTorrent));
+
         }
 
         static async Task<JsonValue> SearchTorrents(string textToSearch)

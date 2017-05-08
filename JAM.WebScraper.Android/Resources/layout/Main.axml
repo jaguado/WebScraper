@@ -15,6 +15,12 @@
         android:layout_height="wrap_content"
         android:text="@string/downloadablesButtonLabel"
         android:layout_below="@+id/buttonTorrent" />
+    <Button
+        android:id="@+id/buttonVideos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/videosButtonLabel"
+        android:layout_below="@+id/buttonDownloadables" />
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewMain"
         android:layout_width="wrap_content"

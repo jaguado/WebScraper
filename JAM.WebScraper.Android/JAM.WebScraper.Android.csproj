@@ -79,13 +79,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomListAdapterDownloadables.cs" />
+    <Compile Include="CustomListAdapterVideos.cs" />
     <Compile Include="CustomListAdapterTorrents.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DownloadablesResultsActivity.cs" />
     <Compile Include="Helpers\Ads.cs" />
     <Compile Include="Helpers\Http.cs" />
     <Compile Include="Helpers\UI.cs" />
     <Compile Include="DownloadablesActivity.cs" />
+    <Compile Include="VideosActivity.cs" />
     <Compile Include="TorrentActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -109,6 +112,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ListItemRowDownloadables.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\DownloadablesResults.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Videos.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ListItemRowVideos.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

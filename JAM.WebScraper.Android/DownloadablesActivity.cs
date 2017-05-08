@@ -1,4 +1,5 @@
 ﻿using System;
+using Android;
 using Android.App;
 using Android.Content;
 using android = Android;
@@ -12,41 +13,41 @@ using Android.Gms.Ads;
 using System.IO;
 using System.Web;
 using System.Threading;
+using JAM.WebScraper.Android.Helpers;
 
 namespace JAM.WebScraper.Android
 {
-    [Activity(Label = "Download files", ScreenOrientation =android.Content.PM.ScreenOrientation.Portrait, Icon = "@drawable/icon")]
+    [Activity(Label = "Search files", ScreenOrientation =android.Content.PM.ScreenOrientation.Portrait, Icon = "@drawable/icon")]
     public class DownloadablesActivity : Activity
     {
-        const string downloadablesApiUrl = "http://api.jamtech.cl/api/Downloadables?urls={0}&extension={1}";
-        private List<dto.DownloadResult> results = null;
+        const string downloadablesApiUrl = "https://jamtech.herokuapp.com/api/Downloadables?urls={0}&extension={1}&levels={2}";
         private ProgressDialog dialog = null;
+        private static string LastSearch = string.Empty;
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Downloadables);
-          
-            //Torrent init
+
             var buttonSearchDownloadables = FindViewById<Button>(Resource.Id.buttonSearchDownloadables);
-            var buttonDownloadDownloadables = FindViewById<Button>(Resource.Id.buttonDownload);  
             var textUrlDownloadables = FindViewById<EditText>(Resource.Id.textSearchDownload);
             var textExtensionDownloadables = FindViewById<EditText>(Resource.Id.textExtensionDownload);
             var statusDownloadables = FindViewById<TextView>(Resource.Id.textStatusDownload);
-            var listViewDownloadables = FindViewById<ListView>(Resource.Id.ListViewDownload);
-            var checkBoxAll = FindViewById<CheckBox>(Resource.Id.checkBoxAll);
 
-            checkBoxAll.Enabled = buttonDownloadDownloadables.Enabled = false;
-            listViewDownloadables.ItemLongClick += delegate(object sender, AdapterView.ItemLongClickEventArgs e)
-            {
-                if (results != null && e.Position >= 0 && results.Count > e.Position)
-                {
-                    var selected = results[e.Position];
-                    Helpers.UI.ShowToast(this, "Start downloading " + selected.Name, ToastLength.Long);
-                    Download(this, selected);
-                }
-            };
+            var url = Intent.GetStringExtra("url");
+            if (!string.IsNullOrEmpty(url))
+                textUrlDownloadables.Text = url;
+
+
+            //Load subdirectory levels
+            var spinner = FindViewById<Spinner>(Resource.Id.ddlDirLevels);
+            var levelAdapter = new ArrayAdapter<string>(
+                this, 17367048, new[] { "0", "1", "2", "3", "4", "5" });
+            levelAdapter.SetDropDownViewResource(17367049);
+            spinner.Adapter = levelAdapter;
+
+
             buttonSearchDownloadables.Click += delegate {
                 try
                 {
@@ -58,184 +59,48 @@ namespace JAM.WebScraper.Android
                     });
 
                     //Search torrents and show results
-                    SearchDownloadables(textUrlDownloadables.Text, textExtensionDownloadables.Text).ContinueWith(files =>
-                    {               
-                        results = null;
+                    LastSearch = new Uri(textUrlDownloadables.Text).ToString();
+                    SearchDownloadables(textUrlDownloadables.Text, textExtensionDownloadables.Text, int.Parse(spinner.SelectedItem.ToString())).ContinueWith(files =>
+                    {
                         if (!files.IsFaulted)
                         {
+                            //TODO Show Results
+                            var activityResults = new Intent(this, typeof(DownloadablesResultsActivity));
+                            activityResults.PutExtra("lastSearch", LastSearch);
+                            activityResults.PutExtra("results", files.Result.ToString());
+                            StartActivityForResult(activityResults, 0);
+
                             RunOnUiThread(() =>
                             {
-                               statusDownloadables.Text = string.Format("{0} files found by JAMTech.cl!!", files.Result.Count);
+                                statusDownloadables.Text = string.Format("{0} files found by JAMTech.cl!!", files.Result.Count);
+                                dialog.Dismiss();
+                                //UI.HideKeyboard(this);
                             });
-                            //Initializing listview
-                            if (listViewDownloadables != null)
-                            {
-                                results = Newtonsoft.Json.JsonConvert.DeserializeObject<List<dto.DownloadResult>>(files.Result.ToString());
-                            }
                         }
                         else
                         {
-                            statusDownloadables.Text = string.Format("ERROR !!");
-                            throw files.Exception;
-                        }    
-                        }).ContinueWith(final=>
-                        {
                             RunOnUiThread(() =>
                             {
-                                listViewDownloadables.Adapter = new CustomListAdapterDownloadables(this, results);
-                                dialog.Dismiss();
-                                Helpers.UI.HideKeyboard(this);
-                                checkBoxAll.Enabled = buttonDownloadDownloadables.Enabled = results.Any();
+                                statusDownloadables.Text = string.Format("ERROR !!");
                             });
-                        });
-                }
-                catch(Exception e)
-                {
-                   Helpers.UI.ShowToast(this, "Error: " + e.ToString(), ToastLength.Long);
-                }
-            };
-
-            
-            buttonDownloadDownloadables.Click += delegate
-            {
-                RunOnUiThread(() => { buttonDownloadDownloadables.Enabled = false; });
-                var adpTemp = (CustomListAdapterDownloadables) listViewDownloadables.Adapter;
-                //var count = DownloadAll(this, adpTemp.List.Where(x => x.Selected));
-                var count = 0;
-                for (int i = 0; i < adpTemp.Count; i++)
-                {
-                    var item = adpTemp.List[i];
-                    if (item.Selected)
-                    {
-                        //Async download with progressBar
-                        Download(this, item);
-                        count++;
-                        //var intent = new Intent(Intent.ActionView, android.Net.Uri.Parse(item.Url));
-                        //StartActivity(intent);
-                    }
-                }
-                //Wait until all donwload finished
-                Task.Run(() =>
-                {
-                    while (adpTemp.List.Any(x => x.Selected && x.DownloadProgress < 100))
-                        Thread.Sleep(200);
-                    Helpers.UI.ShowAlert(this, "Download Finished", string.Format("{0} files downloaded.", count));
-                }).ContinueWith(x=>
-                {
-                    RunOnUiThread(() => {
-                        buttonDownloadDownloadables.Enabled = true;
-                        checkBoxAll.Checked = false;
+                            throw files.Exception;
+                        }
                     });
-                    
-                });
-            };
-
-            checkBoxAll.CheckedChange += delegate(object sender, CompoundButton.CheckedChangeEventArgs e)
-            {
-                var adapter = (CustomListAdapterDownloadables)listViewDownloadables.Adapter;
-                if (adapter != null && adapter.List != null && adapter.List.Any())
+                }
+                catch (Exception e)
                 {
-                    adapter.List.ForEach(x => x.Selected = e.IsChecked);
-                    adapter.NotifyDataSetChanged();
+                    Helpers.UI.ShowToast(this, "Error: " + e.ToString(), ToastLength.Long);
                 }
             };
-            
-
-            //Ads
-            Helpers.Ads.InitAds(FindViewById<AdView>(Resource.Id.adViewDownloadables));
+                   
         }
 
-        private static DateTime lastProgressBarUpdateTime = DateTime.MinValue;
-        private static string DownloadsPath = android.OS.Environment.ExternalStorageDirectory + "/Download"; // The direction is Download folder in Device store. A file will be save here.
-        async static void Download(Activity context, dto.DownloadResult item)
+        static async Task<JsonValue> SearchDownloadables(string url, string extension, int levels = 0)
         {
-            using(var webClient = new System.Net.WebClient())
-            {
-                var view = context.FindViewById<ListView>(Resource.Id.ListViewDownload);
-                var adapter = (CustomListAdapterDownloadables)view.Adapter;
-                webClient.DownloadProgressChanged += delegate(object sender, System.Net.DownloadProgressChangedEventArgs e)
-                {
-                    item.DownloadProgress = e.ProgressPercentage;
-                    //Update progress bar value on the view
-                    if (lastProgressBarUpdateTime < DateTime.Now.AddSeconds(-5))
-                    {
-                        adapter.NotifyDataSetChanged();
-                        lastProgressBarUpdateTime = DateTime.Now;
-                    }
-                };
-          
-                try
-                {
-                    var fileName = Path.GetFileNameWithoutExtension(HttpUtility.UrlDecode(item.BaseUrl.Substring(item.BaseUrl.LastIndexOf("/") + 1)));
-                    var localPath = Path.Combine(DownloadsPath, fileName);
-
-                    var path = Path.Combine(DownloadsPath, fileName);
-                    if (!Directory.Exists(path))
-                        Directory.CreateDirectory(path);
-
-                    //Save using writeAsync
-                    int bytesCount = 0;
-                    if (!File.Exists(Path.Combine(path, item.Name)))
-                    {
-                        var bytes = await webClient.DownloadDataTaskAsync(item.Url);
-                        var fs = new FileStream(Path.Combine(path, item.Name), FileMode.OpenOrCreate);
-                        await fs.WriteAsync(bytes, 0, bytes.Length);// writes to Download folder 
-                        fs.Close();
-                        bytesCount = bytes.Length;
-                    }
-
-                    //File downloaded
-                    item.DownloadProgress = 100;
-                    item.Selected = false;
-                    adapter.NotifyDataSetChanged();
-                    Console.WriteLine("{0} bytes downloaded of file {1}", bytesCount, item.Name);
-                }
-                catch (TaskCanceledException te)
-                {
-                    Helpers.UI.ShowToast(context, "Canceled: " + te.ToString(), ToastLength.Long);
-                    return;
-                }
-                catch (Exception a)
-                {
-                    Helpers.UI.ShowToast(context, "ERROR: " + a.ToString(), ToastLength.Long);
-                    return;
-                }
-            }
-        }
-        static int DownloadAll(Activity context, IEnumerable<dto.DownloadResult> items)
-        {
-            var TaskList = new List<Task>();
-            items.ToList().ForEach(item => 
-            {
-                var task = new Task(() =>
-                {
-                    Download(context, item);
-                });
-                task.Start();
-                TaskList.Add(task);
-            });
-            Task.WhenAll(TaskList.ToArray());
-            return TaskList.Count();
+            return await Http.GetResponse(string.Format(downloadablesApiUrl, url, extension, levels));
         }
 
-        static async Task<JsonValue> SearchDownloadables(string url, string extension)
-        {
-            return await Helpers.Http.GetResponse(string.Format(downloadablesApiUrl, url, extension));
-        }
-
-        void OnDownloadablesListItemClick(object sender, AdapterView.ItemClickEventArgs e)
-        {
-            if (results != null && e.Position >= 0 && results.Count > e.Position)
-            {
-                var selected = results[e.Position];
-                var link = selected.Url;
-                if (!string.IsNullOrEmpty(link))
-                {
-                    var intent = new Intent(Intent.ActionView, android.Net.Uri.Parse(link));
-                    StartActivity(Intent.CreateChooser(intent, "Select App"));
-                }
-            } 
-        }
+       
     }
 }
 

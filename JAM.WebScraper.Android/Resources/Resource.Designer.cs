@@ -145,35 +145,32 @@ namespace JAM.WebScraper.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f08000f
-			public const int Description = 2131230735;
-			
-			// aapt resource value: 0x7f080011
-			public const int Leeds = 2131230737;
-			
-			// aapt resource value: 0x7f08000b
-			public const int ListViewDownload = 2131230731;
-			
-			// aapt resource value: 0x7f08001b
-			public const int ListViewTorrent = 2131230747;
-			
 			// aapt resource value: 0x7f080010
-			public const int Seeds = 2131230736;
+			public const int Description = 2131230736;
 			
-			// aapt resource value: 0x7f08000e
-			public const int Title = 2131230734;
+			// aapt resource value: 0x7f080012
+			public const int Leeds = 2131230738;
 			
 			// aapt resource value: 0x7f08000d
-			public const int Type = 2131230733;
+			public const int ListViewDownload = 2131230733;
 			
-			// aapt resource value: 0x7f08000c
-			public const int adViewDownloadables = 2131230732;
+			// aapt resource value: 0x7f08001d
+			public const int ListViewTorrent = 2131230749;
 			
-			// aapt resource value: 0x7f080016
-			public const int adViewMain = 2131230742;
+			// aapt resource value: 0x7f080021
+			public const int ListViewVideos = 2131230753;
 			
-			// aapt resource value: 0x7f08001c
-			public const int adViewTorrent = 2131230748;
+			// aapt resource value: 0x7f080011
+			public const int Seeds = 2131230737;
+			
+			// aapt resource value: 0x7f08000f
+			public const int Title = 2131230735;
+			
+			// aapt resource value: 0x7f08000e
+			public const int Type = 2131230734;
+			
+			// aapt resource value: 0x7f080018
+			public const int adViewMain = 2131230744;
 			
 			// aapt resource value: 0x7f080000
 			public const int adjust_height = 2131230720;
@@ -181,41 +178,53 @@ namespace JAM.WebScraper.Android
 			// aapt resource value: 0x7f080001
 			public const int adjust_width = 2131230721;
 			
-			// aapt resource value: 0x7f080009
-			public const int buttonDownload = 2131230729;
+			// aapt resource value: 0x7f08000b
+			public const int buttonDownload = 2131230731;
 			
-			// aapt resource value: 0x7f080015
-			public const int buttonDownloadables = 2131230741;
-			
-			// aapt resource value: 0x7f080008
-			public const int buttonSearchDownloadables = 2131230728;
-			
-			// aapt resource value: 0x7f08001a
-			public const int buttonSearchTorrent = 2131230746;
-			
-			// aapt resource value: 0x7f080014
-			public const int buttonTorrent = 2131230740;
-			
-			// aapt resource value: 0x7f080012
-			public const int checkBox = 2131230738;
+			// aapt resource value: 0x7f080016
+			public const int buttonDownloadables = 2131230742;
 			
 			// aapt resource value: 0x7f08000a
-			public const int checkBoxAll = 2131230730;
+			public const int buttonSearchDownloadables = 2131230730;
+			
+			// aapt resource value: 0x7f08001c
+			public const int buttonSearchTorrent = 2131230748;
+			
+			// aapt resource value: 0x7f080020
+			public const int buttonSearchVideos = 2131230752;
+			
+			// aapt resource value: 0x7f080015
+			public const int buttonTorrent = 2131230741;
+			
+			// aapt resource value: 0x7f080017
+			public const int buttonVideos = 2131230743;
+			
+			// aapt resource value: 0x7f080013
+			public const int checkBox = 2131230739;
+			
+			// aapt resource value: 0x7f08000c
+			public const int checkBoxAll = 2131230732;
+			
+			// aapt resource value: 0x7f080008
+			public const int ddlDirLevels = 2131230728;
 			
 			// aapt resource value: 0x7f080002
 			public const int none = 2131230722;
 			
-			// aapt resource value: 0x7f080013
-			public const int progressBar = 2131230739;
+			// aapt resource value: 0x7f080014
+			public const int progressBar = 2131230740;
 			
 			// aapt resource value: 0x7f080006
 			public const int textExtensionDownload = 2131230726;
 			
-			// aapt resource value: 0x7f080017
-			public const int textLabel = 2131230743;
+			// aapt resource value: 0x7f080019
+			public const int textLabel = 2131230745;
 			
 			// aapt resource value: 0x7f080005
 			public const int textLabelExt = 2131230725;
+			
+			// aapt resource value: 0x7f080007
+			public const int textLabelLevels = 2131230727;
 			
 			// aapt resource value: 0x7f080003
 			public const int textLabelUrl = 2131230723;
@@ -223,14 +232,20 @@ namespace JAM.WebScraper.Android
 			// aapt resource value: 0x7f080004
 			public const int textSearchDownload = 2131230724;
 			
-			// aapt resource value: 0x7f080018
-			public const int textSearchTorrent = 2131230744;
+			// aapt resource value: 0x7f08001a
+			public const int textSearchTorrent = 2131230746;
 			
-			// aapt resource value: 0x7f080007
-			public const int textStatusDownload = 2131230727;
+			// aapt resource value: 0x7f08001e
+			public const int textSearchVideos = 2131230750;
 			
-			// aapt resource value: 0x7f080019
-			public const int textStatusTorrent = 2131230745;
+			// aapt resource value: 0x7f080009
+			public const int textStatusDownload = 2131230729;
+			
+			// aapt resource value: 0x7f08001b
+			public const int textStatusTorrent = 2131230747;
+			
+			// aapt resource value: 0x7f08001f
+			public const int textStatusVideos = 2131230751;
 			
 			static Id()
 			{
@@ -265,16 +280,25 @@ namespace JAM.WebScraper.Android
 			public const int Downloadables = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int ListItemRow = 2130903041;
+			public const int DownloadablesResults = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int ListItemRowDownloadables = 2130903042;
+			public const int ListItemRow = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Main = 2130903043;
+			public const int ListItemRowDownloadables = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int Torrent = 2130903044;
+			public const int ListItemRowVideos = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int Main = 2130903045;
+			
+			// aapt resource value: 0x7f030006
+			public const int Torrent = 2130903046;
+			
+			// aapt resource value: 0x7f030007
+			public const int Videos = 2130903047;
 			
 			static Layout()
 			{
@@ -406,14 +430,17 @@ namespace JAM.WebScraper.Android
 			// aapt resource value: 0x7f040029
 			public const int downloadablesButtonLabel = 2130968617;
 			
-			// aapt resource value: 0x7f04002a
-			public const int inputTextLabel = 2130968618;
+			// aapt resource value: 0x7f04002b
+			public const int inputTextLabel = 2130968619;
+			
+			// aapt resource value: 0x7f04002d
+			public const int inputTextLabelExt = 2130968621;
+			
+			// aapt resource value: 0x7f04002e
+			public const int inputTextLabelLevels = 2130968622;
 			
 			// aapt resource value: 0x7f04002c
-			public const int inputTextLabelExt = 2130968620;
-			
-			// aapt resource value: 0x7f04002b
-			public const int inputTextLabelUrl = 2130968619;
+			public const int inputTextLabelUrl = 2130968620;
 			
 			// aapt resource value: 0x7f040021
 			public const int store_picture_message = 2130968609;
@@ -423,6 +450,9 @@ namespace JAM.WebScraper.Android
 			
 			// aapt resource value: 0x7f040028
 			public const int torrentButtonLabel = 2130968616;
+			
+			// aapt resource value: 0x7f04002a
+			public const int videosButtonLabel = 2130968618;
 			
 			static String()
 			{

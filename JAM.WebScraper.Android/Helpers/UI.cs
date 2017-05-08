@@ -15,7 +15,7 @@ namespace JAM.WebScraper.Android.Helpers
             });
             
         }
-        public static void ShowAlert(Activity context, string title, string text)
+        public static void ShowAlertOk(Activity context, string title, string text, System.EventHandler<DialogClickEventArgs> handler=null)
         {
             context.RunOnUiThread(() =>
             {
@@ -23,10 +23,7 @@ namespace JAM.WebScraper.Android.Helpers
                 var alert = dialog.Create();
                 alert.SetTitle(title);
                 alert.SetMessage(text);
-                alert.SetButton("OK", (c, ev) =>
-                {
-                    // Ok button click task  
-                });
+                alert.SetButton("OK", handler);
                 alert.Show();
             });
         }
